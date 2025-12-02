@@ -2,31 +2,29 @@
 using namespace std;
 
 int main() {
-    char c, next;
-    while ((c = cin.get()) != EOF) {
-
-        if (c == '/') {
-            next = cin.peek();
-
-            if (next == '/') {                // single-line comment
-                cin.get();
-                while ((c = cin.get()) != '\n' && c != EOF);
-                if (c == '\n') cout << '\n';
+    string s;
+    bool block= false;
+    while (getline(cin, s)) {
+        string out="";
+        for (int i = 0; i < s.size(); i++) {
+            //Single line
+            if (!block && i+1 < s.size() && s[i]=='/' && s[i+1]=='/')
+            break;
+            //start block comment
+            if (!block && i+1 < s.size() && s[i]=='/' && s[i+1]=='*'){
+                block=true;
+                i++;
+                continue;
             }
-            else if (next == '*') {            // multi-line comment
-                cin.get();
-                char prev = 0;
-                while ((c = cin.get()) != EOF) {
-                    if (prev == '*' && c == '/') break;
-                    prev = c;
-                }
+            //end block comment
+            if(block && i+1 < s.size() && s[i]=='*' && s[i+1]=='/') {
+                block=false;
+                i++;
+                continue;
             }
-            else {
-                cout << c;
-            }
+            if(!block) out+=s[i];
         }
-        else {
-            cout << c;
-        }
+       if(!block) cout<<out<<'\n';
     }
+
 }
