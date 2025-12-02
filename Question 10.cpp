@@ -1,3 +1,5 @@
+/* // comments removed correctly
+ /* ... */ //block comments removed correctly (even across multiple lines) */
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -28,3 +30,4 @@ int main() {
     }
 
 }
+
